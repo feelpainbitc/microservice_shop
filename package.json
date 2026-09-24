@@ -1,0 +1,20 @@
+{
+  "name": "microservice-shop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "workspaces": [
+    "apps/*",
+    "libs/*"
+  ],
+  "scripts": {
+    "dev:gateway": "npm run start:dev -w api-gateway",
+    "dev:users": "npm run start:dev -w users",
+    "dev:catalog": "npm run start:dev -w catalog",
+    "dev:orders": "npm run start:dev -w orders"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

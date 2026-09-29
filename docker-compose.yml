@@ -1,0 +1,16 @@
+services:
+  users-db:
+    image: postgres:17
+    container_name: microservices-users-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: users
+      POSTGRES_PASSWORD: users_password
+      POSTGRES_DB: users_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - users_db_data:/var/lib/postgresql/data
+
+volumes:
+  users_db_data:

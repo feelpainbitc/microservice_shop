@@ -12,5 +12,19 @@ services:
     volumes:
       - users_db_data:/var/lib/postgresql/data
 
+  catalog-db:
+    image: postgres:17
+    container_name: microservices-catalog-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: catalog
+      POSTGRES_PASSWORD: catalog_password
+      POSTGRES_DB: catalog_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - catalog_db_data:/var/lib/postgresql/data
+
 volumes:
   users_db_data:
+  catalog_db_data:

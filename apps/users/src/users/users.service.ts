@@ -68,4 +68,24 @@ export class UserService {
     });
     return newUser;
   }
+
+  async updateUser(params: { id: number }, body: { user: any }) {
+    const { id } = params;
+    let data = body;
+    const updatedUser = await this.prisma.user.update({
+      where: {
+        id,
+      },
+      data,
+    });
+    return updatedUser;
+  }
+
+  async deleteUser(params:{id:number}){
+    const {id} = params;
+    const deletedUser = await this.prisma.user.delete({
+      where:{id}
+    })
+    return deletedUser;
+  }
 }

@@ -46,4 +46,17 @@ export class CatalogService {
     });
     return deletedProduct;
   }
+
+  async findByName(name: string) {
+    console.log(name);
+    console.log(typeof name);
+    return this.prisma.product.findMany({
+      where: {
+        name: {
+          contains: name,
+          mode: 'insensitive',
+        },
+      },
+    });
+  }
 }

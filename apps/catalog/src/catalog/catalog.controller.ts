@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { CatalogService } from './catalog.service.js';
 import { CreateProductDto } from './dto/create-product.dto.js';
@@ -20,12 +21,19 @@ export class CatalogController {
   findAll() {
     return this.catalogService.findAll();
   }
+  @Get('search')
+  search(@Query('name') name: string) {
+    console.log(name);
+    console.log(typeof name);
+    return this.catalogService.findByName(name);
+  }
 
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
-    console.log(`CONTROLLER:${id}`)
+    console.log(`CONTROLLER:${id}`);
     return this.catalogService.findOneById(id);
   }
+
   @Post()
   addOne(@Body() createProductDto: CreateProductDto) {
     return this.catalogService.addOne(createProductDto);

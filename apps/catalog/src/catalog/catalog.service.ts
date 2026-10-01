@@ -13,12 +13,25 @@ export class CatalogService {
   }
 
   async findOneById(id: number) {
+    console.log('+++');
     const product = await this.prisma.product.findUnique({
       where: {
         id,
       },
     });
     return product;
+  }
+  async findByName(name: string) {
+    console.log(2);
+    console.log(name);
+    return this.prisma.product.findMany({
+      where: {
+        name: {
+          contains: name,
+          mode: 'insensitive',
+        },
+      },
+    });
   }
 
   async addOne(data: CreateProductDto) {
@@ -45,18 +58,5 @@ export class CatalogService {
       },
     });
     return deletedProduct;
-  }
-
-  async findByName(name: string) {
-    console.log(name);
-    console.log(typeof name);
-    return this.prisma.product.findMany({
-      where: {
-        name: {
-          contains: name,
-          mode: 'insensitive',
-        },
-      },
-    });
   }
 }

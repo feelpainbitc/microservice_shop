@@ -4,6 +4,7 @@ import { ProductsController } from './products/products.controller.js';
 
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { join } from 'path';
+import { AuthController } from './users/users.controller.js';
 
 @Module({
   imports: [
@@ -17,8 +18,17 @@ import { join } from 'path';
           url: 'localhost:5001',
         },
       },
+      {
+        name: 'USERS_PACKAGE',
+        transport: Transport.GRPC,
+        options: {
+          package: 'users',
+          protoPath: join(process.cwd(), 'src/proto/users.proto'),
+          url: 'localhost:5002',
+        },
+      },
     ]),
   ],
-  controllers: [ProductsController],
+  controllers: [ProductsController, AuthController],
 })
 export class AppModule {}

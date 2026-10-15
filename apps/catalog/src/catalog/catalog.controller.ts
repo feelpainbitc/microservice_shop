@@ -8,6 +8,7 @@ import {
   Patch,
   Delete,
   Query,
+  HttpStatus,
 } from '@nestjs/common';
 import { CatalogService } from './catalog.service.js';
 import { CreateProductDto } from './dto/create-product.dto.js';
@@ -82,9 +83,28 @@ export class CatalogController {
     };
   }
 
+  @GrpcMethod('CatalogService', 'AddProduct')
+  async addProduct(data: { name: string; description: string; price: number }) {
+    console.log(data);
+    console.log(data.name, data.description, data.price);
+    const product = await this.catalogService.addOne(data);
+    return product;
+  }
+
   @Post()
   addOne(@Body() createProductDto: CreateProductDto) {
+    console.log(createProductDto);
     return this.catalogService.addOne(createProductDto);
+  }
+
+  @GrpcMethod('CatalogService', 'UpdateProduct')
+  updateProduct(data: {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+  }) {
+    return this.catalogService.updateProductGrpc(data);
   }
 
   @Patch(':id')
@@ -93,6 +113,15 @@ export class CatalogController {
     @Body() updateProductDto: UpdateProductDto,
   ) {
     return this.catalogService.updateProduct(id, updateProductDto);
+  }
+
+  @GrpcMethod('CatalogService', 'DeleteProduct')
+  async deleteProduct(data: { id: number }) {
+    const product = await this.catalogService.deleteProduct(data.id);
+    if (!product) {
+      return null;
+    }
+    return HttpStatus.OK;
   }
 
   @Delete(':id')

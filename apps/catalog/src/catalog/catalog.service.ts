@@ -35,12 +35,26 @@ export class CatalogService {
   }
 
   async addOne(data: CreateProductDto) {
+    console.log(data);
     const newProduct = await this.prisma.product.create({
       data,
     });
     return newProduct;
   }
 
+  async updateProductGrpc(data: {
+    id: number;
+    name?: string;
+    description?: string;
+    price?: number;
+  }) {
+    const { id, ...updateData } = data;
+
+    return this.prisma.product.update({
+      where: { id },
+      data: updateData,
+    });
+  }
   async updateProduct(id: number, data: UpdateProductDto) {
     const updatedProduct = await this.prisma.product.update({
       where: {

@@ -1,6 +1,12 @@
+
 {
   "name": "@microservices-shop/shared",
   "version": "1.0.0",
   "private": true,
-  "main": "src/index.ts"
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  }
 }

@@ -1,10 +1,10 @@
 import {IsEmail,MinLength,MaxLength} from 'class-validator'
 
 export class CreateUserDto{
-    @MinLength(3)
+    @MinLength(4)
     name:string
 
-    @MinLength(3)
+    @MinLength(4)
     password:string
 
     @MinLength(3)

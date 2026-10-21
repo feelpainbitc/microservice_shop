@@ -5,3 +5,7 @@ dist/
 coverage/
 *.log
 /generated/prisma
+
+*.tsbuildinfo
+
+apps/*/src/generated/prisma/

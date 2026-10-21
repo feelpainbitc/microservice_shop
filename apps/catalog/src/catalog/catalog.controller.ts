@@ -117,11 +117,7 @@ export class CatalogController {
 
   @GrpcMethod('CatalogService', 'DeleteProduct')
   async deleteProduct(data: { id: number }) {
-    const product = await this.catalogService.deleteProduct(data.id);
-    if (!product) {
-      return null;
-    }
-    return HttpStatus.OK;
+    return await this.catalogService.deleteProduct(data.id);
   }
 
   @Delete(':id')

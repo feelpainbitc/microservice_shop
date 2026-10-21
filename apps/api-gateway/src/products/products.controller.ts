@@ -8,7 +8,11 @@ import {
   Post,
   Delete,
   Patch,
+  ParseIntPipe,
 } from '@nestjs/common';
+import { UseGuards } from '@nestjs/common';
+import { JwtGuard } from '../auth/jwt.guard.js';
+import { firstValueFrom } from 'rxjs';
 
 import * as microservices from '@nestjs/microservices';
 
@@ -41,6 +45,7 @@ export class ProductsController {
   }
 
   @Get()
+  // @UseGuards(JwtGuard)
   getAll() {
     return this.catalogService.getProducts({});
   }
@@ -66,7 +71,7 @@ export class ProductsController {
 
   @Patch(':id')
   updateProduct(
-    @Param('id') id: string,
+    @Param('id', ParseIntPipe) id: string,
     @Body() product: { name: string; description: string; price: number },
   ) {
     console.log('PATCH!!!');
@@ -76,7 +81,9 @@ export class ProductsController {
   }
 
   @Delete(':id')
-  deleteProduct(@Param('id') id: string) {
-    return this.catalogService.deleteProduct({ id: Number(id) });
+  deleteProduct(@Param('id', ParseIntPipe) id: string) {
+    const del = this.catalogService.deleteProduct({ id: Number(id) });
+    console.log(del);
+    return del;
   }
 }

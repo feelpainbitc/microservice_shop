@@ -9,10 +9,14 @@ service CatalogService {
 
   rpc AddProduct(AddProductRequest) returns (Product);
   rpc UpdateProduct(UpdateProductRequest) returns (Product);
-  rpc DeleteProduct(DeleteProductRequest) returns (Empty);
+  rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse);
 }
 
 message Empty {}
+
+message DeleteProductResponse {
+  string message = 1;
+}
 
 message AddProductRequest{
   string name = 1;

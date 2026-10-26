@@ -1,3 +1,4 @@
+
 services:
   users-db:
     image: postgres:17
@@ -11,6 +12,11 @@ services:
       - "5433:5432"
     volumes:
       - users_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U users -d users_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   catalog-db:
     image: postgres:17
@@ -24,6 +30,11 @@ services:
       - "5434:5432"
     volumes:
       - catalog_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U catalog -d catalog_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   orders-db:
     image: postgres:17
@@ -37,6 +48,77 @@ services:
       - "5435:5432"
     volumes:
       - orders_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orders -d orders_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  users:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: microservices-users
+    restart: unless-stopped
+    command: >
+      sh -c "npm exec -w users -- prisma migrate deploy --config prisma7.config.ts
+      && npm run start:prod -w users"
+    environment:
+      DATABASE_URL: postgresql://users:users_password@users-db:5432/users_db
+      JWT_SECRET: ${JWT_SECRET:-local-dev-secret-change-me}
+      USERS_PORT: 3001
+    depends_on:
+      users-db:
+        condition: service_healthy
+
+  catalog:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: microservices-catalog
+    restart: unless-stopped
+    command: >
+      sh -c "npm exec -w catalog -- prisma migrate deploy --config prisma7.config.ts
+      && npm run start:prod -w catalog"
+    environment:
+      DATABASE_URL: postgresql://catalog:catalog_password@catalog-db:5432/catalog_db
+      CATALOG_PORT: 3002
+    depends_on:
+      catalog-db:
+        condition: service_healthy
+
+  orders:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: microservices-orders
+    restart: unless-stopped
+    command: >
+      sh -c "npm exec -w orders -- prisma migrate deploy --config prisma7.config.ts
+      && npm run start:prod -w orders"
+    environment:
+      DATABASE_URL: postgresql://orders:orders_password@orders-db:5432/orders_db
+      ORDERS_PORT: 3003
+    depends_on:
+      orders-db:
+        condition: service_healthy
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: microservices-api-gateway
+    restart: unless-stopped
+    command: ["npm", "run", "start:prod", "-w", "api-gateway"]
+    environment:
+      PORT: 3000
+      JWT_SECRET: ${JWT_SECRET:-local-dev-secret-change-me}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - users
+      - catalog
+      - orders
 
 volumes:
   users_db_data:

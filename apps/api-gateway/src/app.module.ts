@@ -19,7 +19,7 @@ import { JwtGuard } from './auth/jwt.guard.js';
         options: {
           package: 'catalog',
           protoPath: join(process.cwd(), '../../libs/proto/catalog.proto'),
-          url: 'localhost:5001',
+          url: 'catalog:5001',
         },
       },
       {
@@ -28,7 +28,7 @@ import { JwtGuard } from './auth/jwt.guard.js';
         options: {
           package: 'users',
           protoPath: join(process.cwd(), '../../libs/proto/users.proto'),
-          url: 'localhost:5002',
+          url: 'users:5002',
         },
       },
       {
@@ -37,7 +37,7 @@ import { JwtGuard } from './auth/jwt.guard.js';
         options: {
           package: 'orders',
           protoPath: join(process.cwd(), '../../libs/proto/orders.proto'),
-          url: 'localhost:5003',
+          url: 'orders:5003',
         },
       },
     ]),

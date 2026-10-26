@@ -11,7 +11,7 @@ async function bootstrap() {
     options: {
       package: 'users',
       protoPath: join(process.cwd(), '../../libs/proto/users.proto'),
-      url: 'localhost:5002',
+      url: '0.0.0.0:5002',
     },
   });
   const port = process.env.USERS_PORT ?? 3001;

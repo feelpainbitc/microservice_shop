@@ -11,7 +11,7 @@ async function bootstrap() {
     options: {
       package: 'catalog',
       protoPath: join(process.cwd(), '../../libs/proto/catalog.proto'),
-      url: 'localhost:5001',
+      url: '0.0.0.0:5001',
     },
   });
 

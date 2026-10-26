@@ -11,9 +11,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { CatalogService } from './catalog.service.js';
-import { CreateProductDto } from './dto/create-product.dto.js';
-import { UpdateProductDto } from './dto/update-product.dto.js';
-
+import { CreateProductDto,UpdateProductDto } from '@microservices-shop/dto';
 import { GrpcMethod } from '@nestjs/microservices';
 
 @Controller('catalog')

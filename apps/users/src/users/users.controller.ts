@@ -7,7 +7,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { UserService } from './users.service.js';
-import { CreateUserDto } from '../dto/create-user.dto.js';
+import { RegisterDto } from '@microservices-shop/dto';
 
 @Controller('users')
 export class UsersController {
@@ -24,7 +24,7 @@ export class UsersController {
   }
 
   @Post()
-  createUser(@Body() createUserDto: CreateUserDto) {
+  createUser(@Body() createUserDto: RegisterDto) {
     return this.userService.createUser(createUserDto);
   }
 }

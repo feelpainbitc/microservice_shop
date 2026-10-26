@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
-import { CreateUserDto } from '../dto/create-user.dto.js';
+import { RegisterDto } from '@microservices-shop/dto';
 import bcrypt from 'bcrypt';
 
 @Injectable()
@@ -55,7 +55,7 @@ export class UserService {
     return user;
   }
 
-  async createUser(user: CreateUserDto) {
+  async createUser(user: RegisterDto) {
     const saltRounds = 10;
     let { name, email, password } = user;
     const passwordHash = await bcrypt.hash(password, saltRounds);
@@ -81,11 +81,11 @@ export class UserService {
     return updatedUser;
   }
 
-  async deleteUser(params:{id:number}){
-    const {id} = params;
+  async deleteUser(params: { id: number }) {
+    const { id } = params;
     const deletedUser = await this.prisma.user.delete({
-      where:{id}
-    })
+      where: { id },
+    });
     return deletedUser;
   }
 }

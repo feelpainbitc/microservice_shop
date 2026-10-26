@@ -10,7 +10,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service.js';
-import { CreateOrderDto } from './dto/create-order.dto.js';
+import { CreateOrderDto } from '@microservices-shop/dto';
 
 import { GrpcMethod } from '@nestjs/microservices';
 

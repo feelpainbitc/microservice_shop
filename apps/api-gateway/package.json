@@ -24,12 +24,14 @@
   "dependencies": {
     "@grpc/grpc-js": "^1.14.5",
     "@grpc/proto-loader": "^0.8.1",
+    "@microservices-shop/dto": "^1.0.0",
     "@microservices-shop/shared": "^1.0.0",
     "@nestjs/common": "^12.0.1",
     "@nestjs/core": "^12.0.1",
     "@nestjs/jwt": "^12.0.3",
     "@nestjs/microservices": "^12.1.2",
     "@nestjs/platform-express": "^12.0.1",
+    "@nestjs/swagger": "^12.0.2",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },

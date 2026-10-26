@@ -1,26 +1,17 @@
-import {
-  Body,
-  Controller,
-  Inject,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Inject, Post } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
 import { OnModuleInit } from '@nestjs/common';
 
+import { ApiOperation, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+
+import { LoginDto, RegisterDto } from '@microservices-shop/dto';
 
 import * as microservices from '@nestjs/microservices';
 
 interface UsersService {
-  Register(data: {
-    name: string;
-    email: string;
-    password: string;
-  }): any;
+  Register(data: { name: string; email: string; password: string }): any;
 
-  Login(data: {
-    email: string;
-    password: string;
-  }): any;
+  Login(data: { email: string; password: string }): any;
 }
 
 @Controller('auth')
@@ -33,11 +24,13 @@ export class AuthController implements OnModuleInit {
   ) {}
 
   onModuleInit() {
-    this.usersService =
-      this.client.getService<UsersService>('UsersService');
+    this.usersService = this.client.getService<UsersService>('UsersService');
   }
 
   @Post('register')
+  @ApiOperation({ summary: 'Зарегестрироваться' })
+  @ApiBody({ type: RegisterDto })
+  @ApiResponse({ status: 201, description: 'Пользователь зарегестрирован' })
   register(
     @Body()
     data: {
@@ -50,6 +43,9 @@ export class AuthController implements OnModuleInit {
   }
 
   @Post('login')
+  @ApiOperation({ summary: 'Авторизоваться' })
+  @ApiBody({ type: LoginDto })
+  @ApiResponse({ status: 201, description: 'Пользователь авторизован + токен' })
   login(
     @Body()
     data: {

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
-import { CreateOrderDto } from './dto/create-order.dto.js';
+import { CreateOrderDto } from '@microservices-shop/dto';
 import { AppException, ErrorCode } from '@microservices-shop/shared';
 import { RpcException } from '@nestjs/microservices';
 import { Inject } from '@nestjs/common';
@@ -139,6 +139,7 @@ export class OrdersService {
         404,
       );
     }
+    return order;
   }
 
   async addOrder(dto: CreateOrderDto) {

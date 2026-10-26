@@ -14,11 +14,8 @@ import { join } from 'path';
         transport: Transport.GRPC,
         options: {
           package: 'catalog',
-          protoPath: join(
-            process.cwd(),
-            '../../apps/catalog/src/proto/catalog.proto',
-          ),
-          url: 'localhost:5001',
+          protoPath: join(process.cwd(), '../../libs/proto/catalog.proto'),
+          url: 'catalog:5001',
         },
       },
     ]),

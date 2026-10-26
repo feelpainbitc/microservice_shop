@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service.js';
-import { CreateProductDto } from './dto/create-product.dto.js';
-import { UpdateProductDto } from './dto/update-product.dto.js';
+import { CreateProductDto, UpdateProductDto } from '@microservices-shop/dto';
 import { AppException, ErrorCode } from '@microservices-shop/shared';
 import { RpcException } from '@nestjs/microservices';
 

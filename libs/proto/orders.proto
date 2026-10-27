@@ -37,6 +37,9 @@ message OrderItem {
 message Order {
   int32 id = 1;
   repeated OrderItem items = 2;
+  string status = 3;
+  string createdAt = 4;
+  string updatedAt = 5;
 }
 
 message OrdersResponse {

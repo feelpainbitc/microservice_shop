@@ -28,6 +28,7 @@ export class AuthController implements OnModuleInit {
   }
 
   @Post('register')
+  @Post('signup')
   @ApiOperation({ summary: 'Зарегестрироваться' })
   @ApiBody({ type: RegisterDto })
   @ApiResponse({ status: 201, description: 'Пользователь зарегестрирован' })

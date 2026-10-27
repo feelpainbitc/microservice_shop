@@ -1,0 +1,23 @@
+image: node:24
+
+stages:
+  - test
+
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_SOURCE_BRANCH_NAME =~ /^feat\/.+/'
+    - when: never
+
+lint_and_test:
+  stage: test
+  before_script:
+    - npm ci
+  script:
+    - npm run lint -w api-gateway
+    - npm run lint -w users
+    - npm run lint -w catalog
+    - npm run lint -w orders
+    - npm run test -w api-gateway
+    - npm run test -w users
+    - npm run test -w catalog
+    - npm run test -w orders

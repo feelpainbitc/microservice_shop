@@ -144,7 +144,7 @@ export class OrdersService {
 
   async addOrder(dto: CreateOrderDto) {
     await this.validateOrderData(dto);
-    return this.prisma.order.create({
+    const order = await this.prisma.order.create({
       data: {
         items: {
           create: dto.items,
@@ -154,5 +154,8 @@ export class OrdersService {
         items: true,
       },
     });
+    console.log('ORDER!!!:');
+    console.log(order);
+    return order;
   }
 }
